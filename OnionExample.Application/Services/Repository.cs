@@ -46,7 +46,8 @@ namespace OnionExample.Application.Services
 
         public IQueryable<T> GetAll(Func<T, bool> expression)
         {
-            throw new NotImplementedException();
+            var data = dbSet.Where(expression);
+            return data.AsQueryable();
         }
 
         public void Update(T model)

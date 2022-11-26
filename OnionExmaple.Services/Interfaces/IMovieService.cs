@@ -15,5 +15,7 @@ namespace OnionExample.Services.Interfaces
         MovieDto GetMovie(int id);
         IEnumerable<MovieDto> GetAllMovie();
         IEnumerable<GetSingleMovieDto> GetAllMovieByDto();
+
+        IEnumerable<GetSingleMovieDto> SearchMovie(SearchDto dto);
     }
 }

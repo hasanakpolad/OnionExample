@@ -1,4 +1,8 @@
-﻿using OnionExample.Services.Interfaces;
+﻿using AutoMapper;
+using OnionExample.Application.Interfaces;
+using OnionExample.Domain.DTOes;
+using OnionExample.Domain.Models;
+using OnionExample.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +13,47 @@ namespace OnionExample.Services.Services
 {
     public class SessionService : ISessionService
     {
-        public void Add()
+        private IUnitOfWork uow;
+        private IRepository<MovieSessionsModel> SessionRepository;
+        private IMapper mapper;
+        public SessionService(IUnitOfWork _uow, IMapper _mapper)
         {
-            throw new NotImplementedException();
+            mapper = _mapper;
+            uow = _uow;
+            SessionRepository = uow.GetRepository<MovieSessionsModel>();
         }
 
-        public void Delete()
+        public void Add(AddSessionDto sessionDto)
         {
-            throw new NotImplementedException();
+            var entity = mapper.Map<MovieSessionsModel>(sessionDto);
+            SessionRepository.Add(entity);
+            uow.SaveChanges();
         }
 
-        public List<string> GetAllSession()
+        public void Delete(SessionDto sessionDto)
         {
-            throw new NotImplementedException();
+            var entity = mapper.Map<MovieSessionsModel>(sessionDto);
+            SessionRepository.Delete(entity);
+            uow.SaveChanges();
         }
 
-        public string GetSession()
+        public List<SessionDto> GetAllSession()
         {
-            throw new NotImplementedException();
+            var entity = SessionRepository.GetAll();
+            return mapper.Map<List<SessionDto>>(entity);
         }
 
-        public void Update()
+        public SessionDto GetSession(int id)
         {
-            throw new NotImplementedException();
+            var entity = SessionRepository.Get(id);
+            return mapper.Map<SessionDto>(entity);
+        }
+
+        public void Update(SessionDto sessionDto)
+        {
+            var entity = mapper.Map<MovieSessionsModel>(sessionDto);
+            SessionRepository.Update(entity);
+            uow.SaveChanges();
         }
     }
 }

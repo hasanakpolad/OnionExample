@@ -1,4 +1,8 @@
-﻿using OnionExample.Services.Interfaces;
+﻿using AutoMapper;
+using OnionExample.Application.Interfaces;
+using OnionExample.Domain.DTOes;
+using OnionExample.Domain.Models;
+using OnionExample.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +13,46 @@ namespace OnionExample.Services.Services
 {
     public class SalloonService : ISalloonService
     {
-        public void Add()
+        private IRepository<SalloonModel> SalloonRepository;
+        private IUnitOfWork uow;
+        IMapper mapper;
+        public SalloonService(IUnitOfWork _uow, IMapper _mapper)
         {
-            throw new NotImplementedException();
+            mapper = _mapper;
+            uow = _uow;
+            SalloonRepository = uow.GetRepository<SalloonModel>();
         }
 
-        public void Delete()
+        public void Add(AddSalloonDto salloonDto)
         {
-            throw new NotImplementedException();
+            var entity = mapper.Map<SalloonModel>(salloonDto);
+            SalloonRepository.Add(entity);
+            uow.SaveChanges();
         }
 
-        public List<string> GetAllSaloon()
+        public void Delete(SalloonDto salloonDto)
         {
-            throw new NotImplementedException();
+            var entity = mapper.Map<SalloonModel>(salloonDto);
+            SalloonRepository.Delete(entity);
+            uow.SaveChanges();
         }
 
-        public string GetSaloon()
+        public IEnumerable<SalloonDto> GetAllSaloon()
         {
-            throw new NotImplementedException();
+            var enitiy = SalloonRepository.GetAll();
+            return mapper.Map<IEnumerable<SalloonDto>>(enitiy);
         }
 
-        public void Update()
+        public SalloonDto GetSaloon(int id)
         {
-            throw new NotImplementedException();
+            var entity = SalloonRepository.Get(id);
+            return mapper.Map<SalloonDto>(entity);
+        }
+
+        public void Update(SalloonDto salloonDto)
+        {
+            var entity = mapper.Map<SalloonModel>(salloonDto);
+            SalloonRepository.Update(entity);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnionExample.Domain.DTOes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace OnionExample.Services.Interfaces
 {
     public interface ISessionService
     {
-        void Add();
-        void Update();
-        void Delete();
-        string GetSession();
-        List<string> GetAllSession();
+        void Add(AddSessionDto sessionDto);
+        void Update(SessionDto sessionDto);
+        void Delete(SessionDto sessionDto);
+        SessionDto GetSession(int id);
+        List<SessionDto> GetAllSession();
     }
 }

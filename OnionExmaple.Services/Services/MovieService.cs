@@ -68,5 +68,23 @@ namespace OnionExample.Services.Services
                 });
             return entities;
         }
+
+        public IEnumerable<GetSingleMovieDto> SearchMovie(SearchDto dto)
+        {
+            var entities = MovieRepository.GetAll()
+                .Select(m => new GetSingleMovieDto()
+                {
+                    Id = m.Id,
+                    MovieName = m.MovieName,
+                    Salloons = m.Salloons.Select(s => new SalloonDto()
+                    {
+                        Id = s.Id,
+                        SalloonName = s.SalloonName,
+                        MovieSessionsModels = mapper.Map<IEnumerable<SessionDto>>(s.MovieSessionsModels)
+
+                    })
+                });
+            return entities;
+        }
     }
 }
