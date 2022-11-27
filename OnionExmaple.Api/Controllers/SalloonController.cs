@@ -15,17 +15,17 @@ namespace OnionExmaple.Api.Controllers
             service = _service;
         }
 
-        [HttpGet]
+        [HttpGet(nameof(Get))]
         public IActionResult Get(int id)
         {
             return Ok(service.GetSaloon(id));
         }
-        [HttpGet]
+        [HttpGet(nameof(GetAll))]
         public IActionResult GetAll()
         {
             return Ok(service.GetAllSaloon());
         }
-        [HttpPost]
+        [HttpPost((nameof(Add)))]
         public IActionResult Add(AddSalloonDto salloonDto)
         {
             try
@@ -39,7 +39,7 @@ namespace OnionExmaple.Api.Controllers
                 return StatusCode(500);
             }
         }
-        [HttpPut]
+        [HttpPut(nameof(Update))]
         public IActionResult Update(SalloonDto salloonDto)
         {
             try
@@ -53,7 +53,7 @@ namespace OnionExmaple.Api.Controllers
                 return StatusCode(500);
             }
         }
-        [HttpDelete]
+        [HttpDelete(nameof(Delete))]
         public IActionResult Delete(SalloonDto salloonDto)
         {
             try

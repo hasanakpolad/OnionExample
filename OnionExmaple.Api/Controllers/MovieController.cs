@@ -35,13 +35,13 @@ namespace OnionExmaple.Api.Controllers
             return Ok(service.GetAllMovieByDto());
         }
 
-        [HttpPost]
+        [HttpPost(nameof(Search))]
         public IActionResult Search(SearchDto model)
         {
             return Ok(service.SearchMovie(model));
         }
 
-        [HttpPost]
+        [HttpPost(nameof(AddMovie))]
         public IActionResult AddMovie(AddMovieDto movieDto)
         {
             try
@@ -56,7 +56,7 @@ namespace OnionExmaple.Api.Controllers
                 return StatusCode(500);
             }
         }
-        [HttpPut]
+        [HttpPut(nameof(UpdateMovie))]
         public IActionResult UpdateMovie(MovieDto movieDto)
         {
             try
@@ -71,7 +71,7 @@ namespace OnionExmaple.Api.Controllers
                 return StatusCode(500);
             }
         }
-        [HttpDelete]
+        [HttpDelete(nameof(DeleteMovie))]
         public IActionResult DeleteMovie(MovieDto movieDto)
         {
             try
